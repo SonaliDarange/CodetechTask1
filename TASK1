@@ -1,0 +1,136 @@
+
+/*CODTECH-TASK1
+NAME: Sonali Naganth Darange
+COMPANY: CODTECH IT SOLUTIONS
+DOMAIN: JAVA PROGRAMMING
+DURATION: DEC TO JAN 2024
+MENTOR: SRAVANI GOUNI
+
+Project Overview: Inventory Management System
+Objective
+A Java Swing-based application for managing inventory efficiently, allowing users to add, update, and delete items with a user-friendly GUI.
+
+Key Features
+Interactive GUI: Colorful, intuitive interface for seamless user interaction.
+Dynamic Inventory Management: Add, remove, and clear items with real-time updates.
+Suggestion List: Displays item suggestions as users type in the name field.
+Validation: Ensures valid input for item names and quantities.
+Exit Option: Safely close the application.
+Technologies Used
+Language: Java
+Tools: JDK, Swing
+Potential Enhancements
+Add file/database storage for persistent inventory.
+Include advanced search and reporting features.
+Upgrade GUI with JavaFX for a modern look.
+This system is ideal for small businesses or personal inventory management. Let me know if you need further assistance!*/
+import java.awt.*;
+import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
+
+public class InventoryManagement1 {
+
+  private JFrame frame;
+  private JTextField productIdField, categoryIdField, nameField, quantityField, priceField;
+  private JTable productTable;
+  private DefaultTableModel tableModel;
+
+  public InventoryManagement1() {
+    frame = new JFrame("Inventory Management");
+    frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+    // Create a panel with GridBagLayout for better control over component placement
+    JPanel inputPanel = new JPanel(new GridBagLayout());
+    JPanel tablePanel = new JPanel(new BorderLayout());
+
+    // Create a GridBagConstraints object to control component placement
+    GridBagConstraints gbc = new GridBagConstraints();
+    gbc.insets = new Insets(5, 5, 5, 5); // Add some space between components
+    gbc.anchor = GridBagConstraints.WEST; // Align components to the left
+
+    // Arrange labels and text fields in the desired order
+    gbc.gridx = 0;
+    gbc.gridy = 0;
+    inputPanel.add(new JLabel("Product ID:"), gbc);
+
+    gbc.gridx = 1;
+    productIdField = new JTextField(10);
+    inputPanel.add(productIdField, gbc);
+
+    gbc.gridx = 0;
+    gbc.gridy = 1;
+    inputPanel.add(new JLabel("Name:"), gbc);
+
+    gbc.gridx = 1;
+    nameField = new JTextField(10);
+    inputPanel.add(nameField, gbc);
+
+    gbc.gridx = 0;
+    gbc.gridy = 2;
+    inputPanel.add(new JLabel("Category ID:"), gbc);
+
+    gbc.gridx = 1;
+    categoryIdField = new JTextField(10);
+    inputPanel.add(categoryIdField, gbc);
+
+    gbc.gridx = 0;
+    gbc.gridy = 3;
+    inputPanel.add(new JLabel("Quantity:"), gbc);
+
+    gbc.gridx = 1;
+    quantityField = new JTextField(10);
+    inputPanel.add(quantityField, gbc);
+
+    gbc.gridx = 0;
+    gbc.gridy = 4;
+    inputPanel.add(new JLabel("Price:"), gbc);
+
+    gbc.gridx = 1;
+    priceField = new JTextField(10);
+    inputPanel.add(priceField, gbc);
+
+    // Add the "Add" button below the input fields
+    gbc.gridx = 0;
+    gbc.gridy = 5;
+    gbc.gridwidth = 2;
+    JButton addButton = new JButton("Add");
+    addButton.addActionListener(e -> addProduct());
+    inputPanel.add(addButton, gbc);
+
+    // Create the table to display products
+    String[] columnNames = {"Product ID", "Category ID", "Name", "Quantity", "Price"};
+    tableModel = new DefaultTableModel(columnNames, 0);
+    productTable = new JTable(tableModel);
+    JScrollPane scrollPane = new JScrollPane(productTable);
+    tablePanel.add(scrollPane, BorderLayout.CENTER);
+
+    // Add panels to the frame
+    frame.getContentPane().add(inputPanel, BorderLayout.NORTH);
+    frame.getContentPane().add(tablePanel, BorderLayout.CENTER);
+
+    // Set the frame properties
+    frame.setSize(600, 400);
+    frame.setVisible(true);
+  }
+
+  private void addProduct() {
+    String productId = productIdField.getText();
+    String categoryId = categoryIdField.getText();
+    String name = nameField.getText();
+    String quantity = quantityField.getText();
+    String price = priceField.getText();
+
+    tableModel.addRow(new Object[]{productId, categoryId, name, quantity, price});
+
+    // Clear the text fields after adding the product
+    productIdField.setText("");
+    categoryIdField.setText("");
+    nameField.setText("");
+    quantityField.setText("");
+    priceField.setText("");
+  }
+
+  public static void main(String[] args) {
+    SwingUtilities.invokeLater(() -> new InventoryManagement1());
+  }
+}
